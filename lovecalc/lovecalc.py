@@ -55,13 +55,23 @@ class LoveCalc(commands.Cog):
 
 
         current_directory = os.path.dirname(os.path.abspath(__file__))
-        font_path = os.path.join(current_directory, "timesbi.ttf")
+        font_path = os.path.join(current_directory, "times.ttf")
         font_large_path = os.path.join(current_directory, "times.ttf")
         # Write user names
         draw = ImageDraw.Draw(bg_img)
         font = ImageFont.truetype(font_path, 60)
-        draw.text(((bg_img.width) - 550 , 345), user2_name, font=font, fill="white")
-        draw.text(((bg_img.width) - 550, 45), user1_name, font=font, fill="white")
+        # For user2_name centered around (bg_img.width - 550, 350)
+        user2_text_width, user2_text_height = draw.textsize(user2_name, font=font)
+        user2_text_x = (bg_img.width - 550) - (user2_text_width / 2)
+        user2_text_y = 350 - (user2_text_height / 2)
+        draw.text((user2_text_x, user2_text_y), user2_name, font=font, fill="white")
+
+        # For user1_name centered around (bg_img.width - 550, 45)
+        user1_text_width, user1_text_height = draw.textsize(user1_name, font=font)
+        user1_text_x = (bg_img.width - 550) - (user1_text_width / 2)
+        user1_text_y = 45 - (user1_text_height / 2)
+        draw.text((user1_text_x, user1_text_y), user1_name, font=font, fill="white")
+
 
         # Write compatibility with an outline
         font_large = ImageFont.truetype(font_large_path, 85)
