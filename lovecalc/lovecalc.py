@@ -35,39 +35,35 @@ class LoveCalc(commands.Cog):
         return bg
 
     async def create_love_image(self, user1_name, user1_avatar_url, user2_name, user2_avatar_url, compatibility):
-        # Load the background image
+
         bg_data = await self.fetch_image("https://i.postimg.cc/25XdjThY/SS19.png")
         bg_img = Image.open(BytesIO(bg_data))
 
-        # Load avatars
+
         user1_avatar_data = await self.fetch_image(user1_avatar_url)
         user1_avatar = Image.open(BytesIO(user1_avatar_data))
         user2_avatar_data = await self.fetch_image(user2_avatar_url)
         user2_avatar = Image.open(BytesIO(user2_avatar_data))
 
-        # Crop avatars to circular shape and resize
+
         user1_avatar = self.circular_crop(user1_avatar).resize((260, 260))
         user2_avatar = self.circular_crop(user2_avatar).resize((260, 260))
 
-        # Place avatars on the background
+
         bg_img.paste(user1_avatar, (50, 100), user1_avatar)
         bg_img.paste(user2_avatar, (655, 100), user2_avatar)
 
 
         current_directory = os.path.dirname(os.path.abspath(__file__))
-        font_path = os.path.join(current_directory, "times.ttf")
+        font_path = os.path.join(current_directory, "timesi.ttf")
         font_large_path = os.path.join(current_directory, "times.ttf")
-        # Write user names
         draw = ImageDraw.Draw(bg_img)
         font = ImageFont.truetype(font_path, 60)
-        # For user2_name centered around (bg_img.width - 550, 350)
         draw.text(((bg_img.width) - 480 , 350), user2_name, font=font, fill="white", anchor="ma")
-
-        # For user1_name centered around (bg_img.width - 550, 45)
         draw.text(((bg_img.width) - 480, 45), user1_name, font=font, fill="white", anchor="ma")
 
 
-        # Write compatibility with an outline
+
         font_large = ImageFont.truetype(font_large_path, 85)
         compatibility_str = f"{compatibility}%"
         text_position = (bg_img.width / 2 - 75, bg_img.height / 2 - 50)
@@ -77,7 +73,7 @@ class LoveCalc(commands.Cog):
         draw.text((text_position[0], text_position[1] + 2), compatibility_str, font=font_large, fill="red")
         draw.text(text_position, compatibility_str, font=font_large, fill="white")
 
-        # Save to a bytes buffer
+
         buffer = BytesIO()
         bg_img.save(buffer, format="PNG")
         buffer.seek(0)
@@ -98,7 +94,7 @@ class LoveCalc(commands.Cog):
         compatibility = random.randint(0, 101)
         random.setstate(state)
 
-        heart_emoji = "💔"  # Default: Broken heart
+        heart_emoji = "💔"  
         if compatibility > 50:
             heart_emoji = "❤️"
         if compatibility > 75:
@@ -109,16 +105,16 @@ class LoveCalc(commands.Cog):
             0: "It's a rocky road ahead!",
             25: "There's a tiny spark!",
             50: "There's potential!",
-            75: "Things are heating up!",
+            75: "MATE MATE MATE MATE MATE MATE MATE",
             100: "A match made in heaven!"
         }
         compatibility_message = messages.get((compatibility // 25) * 25, "It's complicated.")
     
-        # Create an embedded message
+
         embed = discord.Embed(
             title=f"❤️ Love Calculation for {p1.display_name} & {p2.display_name}",
             description=f"{formatted_message}\n{compatibility_message}",
-            color=discord.Color.red()  # Setting the color to red
+            color=discord.Color.red()  
         )
 		
         love_image = await self.create_love_image(p1.display_name, str(p1.avatar.url), p2.display_name, str(p2.avatar.url), compatibility)
