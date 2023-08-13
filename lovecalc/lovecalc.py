@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 import aiohttp
 from io import BytesIO
 import os
+import datetime
 
 class LoveCalc(commands.Cog):
     """Calculate the love between two people."""
@@ -89,8 +90,13 @@ class LoveCalc(commands.Cog):
             p2 = ctx.author
 
         state = random.getstate()
-        new_seed = str(p1.id + p2.id)
-        random.seed(new_seed)
+
+        current_time = datetime.datetime.now()
+        half_day_indicator = current_time.hour // 12
+        new_seed = str(p1.id + p2.id + half_day_indicator)
+
+        random.seed(new_seed)  
+
         compatibility = random.randint(0, 101)
         random.setstate(state)
 
