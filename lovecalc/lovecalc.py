@@ -4,6 +4,7 @@ import random
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 import aiohttp
 from io import BytesIO
+import os
 
 class LoveCalc(commands.Cog):
     """Calculate the love between two people."""
@@ -52,14 +53,18 @@ class LoveCalc(commands.Cog):
         bg_img.paste(user1_avatar, (50, 100), user1_avatar)
         bg_img.paste(user2_avatar, (655, 100), user2_avatar)
 
+
+        current_directory = os.path.dirname(os.path.abspath(__file__))
+        font_path = os.path.join(current_directory, "timesbi.ttf")
+        font_large_path = os.path.join(current_directory, "times.ttf")
         # Write user names
         draw = ImageDraw.Draw(bg_img)
-        font = ImageFont.truetype("timesbi.ttf", 60)
+        font = ImageFont.truetype(font_path, 60)
         draw.text(((bg_img.width) - 550 , 345), user2_name, font=font, fill="white")
         draw.text(((bg_img.width) - 550, 45), user1_name, font=font, fill="white")
 
         # Write compatibility with an outline
-        font_large = ImageFont.truetype("times.ttf", 85)
+        font_large = ImageFont.truetype(font_large_path, 85)
         compatibility_str = f"{compatibility}%"
         text_position = (bg_img.width / 2 - 75, bg_img.height / 2 - 50)
         draw.text((text_position[0] - 2, text_position[1]), compatibility_str, font=font_large, fill="red")
