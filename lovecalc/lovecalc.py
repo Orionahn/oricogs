@@ -61,10 +61,10 @@ class LoveCalc(commands.Cog):
         draw = ImageDraw.Draw(bg_img)
         font = ImageFont.truetype(font_path, 60)
         # For user2_name centered around (bg_img.width - 550, 350)
-        draw.text(((bg_img.width) - 550 , 350), user2_name, font=font, fill="white", anchor="ms")
+        draw.text(((bg_img.width) - 550 , 350), user2_name, font=font, fill="white", anchor="ma")
 
         # For user1_name centered around (bg_img.width - 550, 45)
-        draw.text(((bg_img.width) - 550, 45), user1_name, font=font, fill="white", anchor="ms")
+        draw.text(((bg_img.width) - 550, 45), user1_name, font=font, fill="white", anchor="ma")
 
 
         # Write compatibility with an outline
