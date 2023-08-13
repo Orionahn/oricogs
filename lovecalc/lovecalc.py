@@ -54,7 +54,7 @@ class LoveCalc(commands.Cog):
 
         # Write user names
         draw = ImageDraw.Draw(bg_img)
-        font_path ="/home/orion/.fonts/timesi.ttf"
+        font_path ="\home\orion\.fonts\timesi.ttf"
         font = ImageFont.truetype("font_path", 60)
         draw.text(((bg_img.width) - 550 , 345), user2_name, font=font, fill="white")
         draw.text(((bg_img.width) - 550, 45), user1_name, font=font, fill="white")
