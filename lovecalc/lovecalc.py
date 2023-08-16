@@ -6,6 +6,8 @@ import aiohttp
 from io import BytesIO
 import os
 import datetime
+from datetime import datetime
+
 
 class LoveCalc(commands.Cog):
     """Calculate the love between two people."""
