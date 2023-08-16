@@ -89,16 +89,14 @@ class LoveCalc(commands.Cog):
         if p2 is None:
             p2 = ctx.author
 
-        state = random.getstate()
+        current_date = datetime.now()
+        date_str = current_date.strftime("%Y%m%d")
+        half_day_indicator = "AM" if current_date.hour < 12 else "PM"
 
-        current_time = datetime.datetime.now()
-        half_day_indicator = current_time.hour // 12
-        new_seed = str(p1.id + p2.id + half_day_indicator)
+        new_seed = str(p1.id + p2.id) + date_str + half_day_indicator
 
-        random.seed(new_seed)  
-
+        random.seed(new_seed)
         compatibility = random.randint(0, 101)
-        random.setstate(state)
 
         heart_emoji = "💔"  
         if compatibility > 50:
@@ -112,7 +110,8 @@ class LoveCalc(commands.Cog):
             25: "There's a tiny spark!",
             50: "There's potential!",
             75: "MATE MATE MATE MATE MATE MATE MATE",
-            100: "A match made in heaven!"
+            100: "A match made in heaven!",
+            101: "MARRY MARRY MARRY MARRY MARRY MARRY"
         }
         compatibility_message = messages.get((compatibility // 25) * 25, "It's complicated.")
     
