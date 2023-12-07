@@ -90,7 +90,7 @@ class Welcomer(commands.Cog):
         background.save(buffer, format="PNG")
         buffer.seek(0)
 
-        await welcome_channel.send(f"Welcome {member.mention}! Thanks for joining **Paws & Claws!**   🐱", file=discord.File(buffer, "welcome_image.png"))
+        await welcome_channel.send(file=discord.File(buffer, "welcome_image.png"))
 
     @commands.guild_only()
     @commands.admin()
