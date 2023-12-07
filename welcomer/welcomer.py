@@ -70,7 +70,7 @@ class Welcomer(commands.Cog):
         draw.text(text_position, text, (255, 255, 255), font=font)
 
         username_text = member.display_name
-        font_username = ImageFont.truetype("timesi.ttf", 45)
+        font_username = ImageFont.truetype(font_path, 45)
 
         # Calculate text width and height using textbbox
         left, top, right, bottom = draw.textbbox((0, 0), username_text, font=font_username)
