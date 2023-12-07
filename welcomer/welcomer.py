@@ -4,6 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 import aiohttp
 from io import BytesIO
 import random
+import os
 
 class Welcomer(commands.Cog):
     def __init__(self, bot):
@@ -62,7 +63,9 @@ class Welcomer(commands.Cog):
         # Add the member count text
         draw = ImageDraw.Draw(background)
         text = f"{member_count}"
-        font = ImageFont.truetype("timesi.ttf", 30)  
+        current_directory = os.path.dirname(os.path.abspath(__file__))
+        font_path = os.path.join(current_directory, "timesi.ttf")
+        font = ImageFont.truetype(font_path, 30)  
         text_position = (158, 560)  
         draw.text(text_position, text, (255, 255, 255), font=font)
 
