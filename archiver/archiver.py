@@ -10,7 +10,9 @@ class archiver(commands.Cog):
     @commands.command()
     async def archive_messages(self, ctx):
         """Archives messages from the past 3 days and DMs the file to the user."""
-        await ctx.send("Archiving messages, this may take some time...")
+        # Notify the command invoker via DM that the process is starting.
+        dm_channel = await ctx.author.create_dm()
+        await dm_channel.send("Archiving messages, this may take some time... Please be patient.")
 
         # Calculate the date for 3 days ago
         three_days_ago = datetime.datetime.utcnow() - datetime.timedelta(days=3)
@@ -28,16 +30,15 @@ class archiver(commands.Cog):
                             # Write each message to the file
                             file.write(f"{message.created_at} - {message.author.display_name}: {message.content}\n")
                     except discord.Forbidden:
-                        await ctx.send(f"Permission denied to read history for {channel.mention}")
+                        await dm_channel.send(f"Permission denied to read history for {channel.mention}")
                     except Exception as e:
-                        await ctx.send(f"Error fetching messages for {channel.mention}: {str(e)}")
+                        await dm_channel.send(f"Error fetching messages for {channel.mention}: {str(e)}")
 
         # Send the file via DM
         try:
-            await ctx.author.send("Here's the archive of messages from the past 3 days:", file=discord.File(file_path))
-            await ctx.send("Message archive has been sent to your DMs!")
-        except discord.HTTPException as e:
-            await ctx.send("Failed to send the file. Please make sure you have DMs enabled from server members.")
+            await dm_channel.send("Here's the archive of messages from the past 3 days:", file=discord.File(file_path))
+        except discord.HTTPException:
+            await dm_channel.send("Failed to send the file. Please make sure you have DMs enabled from server members.")
         
         # Clean up the file after sending
         os.remove(file_path)
