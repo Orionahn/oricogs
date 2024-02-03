@@ -17,7 +17,7 @@ class fournine(commands.Cog):
                 # Skip if the member is a bot or if the bot cannot change the member's nickname
                 if member.bot or member == ctx.guild.owner:
                     continue
-                await member.edit(nick="Happy Black History Month")
+                await member.edit(nick="China #1 Praise Leader Xi")
             except Forbidden:
                 failed_changes += 1
                 continue
